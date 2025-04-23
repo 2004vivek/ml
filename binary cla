@@ -1,0 +1,24 @@
+from numpy import where
+from collections import Counter
+from sklearn.datasets import make_blobs
+from matplotlib import pyplot
+
+X,y=make_blobs(n_samples=1000,centers=2,random_state=1)
+print(X.shape,y.shape)
+counter=Counter(y)
+print(counter)
+for i in range(10):
+  print(X[i],y[i])
+
+for label,_ in counter.items():
+  row_idx=where(label==y)[0]
+  if(label==0):
+    pyplot.scatter(X[row_idx,0],X[row_idx,1],label='class 0',color='red')
+  else:
+    pyplot.scatter(X[row_idx,0],X[row_idx,1],label='class 1',color='blue')
+
+pyplot.legend()
+pyplot.show()
+
+
+
