@@ -1,0 +1,41 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code onlin
+import java.util.Scanner;
+import java.util.HashMap;
+public class NaiveBayes{
+    public static void main(String [] args){
+        Scanner sc=new Scanner(System.in);
+        HashMap<String,Integer>positiveword=new HashMap<>();
+        HashMap<String,Integer>negativeword=new HashMap<>();
+        //train
+        train(positiveword,"good awesome nice great happy excellent love positive");
+        train(negativeword,"bad ugly terrible worst negative sad");
+        
+        //user input
+        System.out.println("Enter a sentence to classify"); 
+        String input=sc.nextLine();
+        
+        classify(positiveword,negativeword,input);
+    }
+    public static void train(HashMap<String,Integer>category,String text){
+        for (String word:text.split(" ")){
+            category.put(word,category.getOrDefault(word,0)+1);
+        }
+    }
+    
+    public static void classify(HashMap<String,Integer>pos,HashMap<String,Integer>neg,String text){
+        double positivescore=1.0,negativescore=1.0;
+        for(String word:text.split(" ")){
+            positivescore *=(pos.getOrDefault(word,1)+1);
+            negativescore*=(neg.getOrDefault(word,1)+1);
+        }
+ System.out.println("this is postive"+positivescore);
+          System.out.println("this is negative"+negativescore);
+        if(positivescore>negativescore){
+                        System.out.println("The text is POSITIVE 😊");
+        }
+        else{
+            System.out.println("The text is NEGATIVE 😞");
+        }
+    }
+}
